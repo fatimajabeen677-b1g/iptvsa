@@ -8,7 +8,630 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #2e7d32;
+            --orange: #e65100;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --light-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --radius: 20px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light-bg);
+            color: #111827;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: var(--white);
+            padding: 14px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            backdrop-filter: blur(6px);
+            background: rgba(255,255,255,0.94);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .logo .flag { font-size: 1.8rem; line-height: 1; }
+        .logo .green { color: var(--green); }
+        .logo .orange { color: var(--orange); }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 4px 12px;
+            margin-left: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-left: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                justify-content: space-between;
+                gap: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 20px 0 12px;
+                gap: 16px;
+                border-top: 1px solid #e5e7eb;
+                margin-top: 12px;
+                order: 3;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition), transform 0.15s;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-primary:hover { background: #1e5a22; transform: scale(1.02); }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--orange);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 2px solid var(--orange);
+            transition: background var(--transition), color var(--transition);
+        }
+        .btn-secondary:hover { background: var(--orange); color: white; }
+
+        .btn-buy {
+            display: inline-block;
+            background: var(--orange);
+            color: white;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition);
+        }
+        .btn-buy:hover { background: #b84a00; }
+
+        .btn-buy-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--orange);
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 2px solid var(--orange);
+            transition: background var(--transition), color var(--transition);
+        }
+        .btn-buy-outline:hover { background: var(--orange); color: white; }
+
+        .btn-cta-large {
+            display: inline-block;
+            background: var(--orange);
+            color: white;
+            font-weight: 800;
+            padding: 18px 48px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background var(--transition), transform 0.15s;
+        }
+        .btn-cta-large:hover { background: #b84a00; transform: scale(1.02); }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 60px 0 40px;
+            background: linear-gradient(145deg, #f0fdf4 0%, #ffffff 100%);
+        }
+        .hero-content { max-width: 900px; margin: 0 auto; text-align: center; }
+
+        .hero-badge {
+            display: inline-block;
+            background: #e5f4e5;
+            color: var(--green);
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+        .hero-badge .star { margin-right: 6px; }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+        .hero h1 .highlight-green { color: var(--green); }
+        .hero h1 .highlight-orange { color: var(--orange); }
+        .hero h1 .highlight-white { color: #1f2937; display: block; font-size: 1.6rem; margin-top: 4px; }
+
+        .hero .description {
+            font-size: 1.15rem;
+            color: #374151;
+            max-width: 750px;
+            margin: 0 auto 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            margin: 30px 0 20px;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 6px 18px 6px 14px;
+            border-radius: 60px;
+            box-shadow: var(--shadow);
+        }
+        .trust-badge .icon { font-size: 1.4rem; }
+        .trust-badge .label { font-weight: 600; font-size: 0.9rem; display: flex; flex-direction: column; }
+        .trust-badge .label small { font-weight: 400; font-size: 0.7rem; color: var(--gray); }
+
+        .trust-text {
+            background: white;
+            padding: 24px 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 860px;
+            margin: 20px auto 0;
+            text-align: left;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+        .trust-text .cities { font-weight: 600; color: var(--orange); }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .hero h1 .highlight-white { font-size: 1.2rem; }
+            .trust-badges { gap: 12px; }
+            .trust-badge { padding: 4px 12px; }
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .section-title .green { color: var(--green); }
+        .section-title .orange { color: var(--orange); }
+
+        .section-sub {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 40px;
+            color: #4b5563;
+            font-size: 1.05rem;
+        }
+
+        /* ===== INCLUDED / CHANNELS ===== */
+        .included { padding: 60px 0; }
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+            gap: 24px;
+        }
+        .channel-card {
+            background: white;
+            padding: 24px 18px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform var(--transition);
+        }
+        .channel-card:hover { transform: translateY(-4px); }
+        .channel-card .flag { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+        .channel-card h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .channels-count { font-weight: 700; color: var(--orange); font-size: 0.85rem; margin-bottom: 8px; }
+        .channel-card p { font-size: 0.9rem; color: #4b5563; }
+
+        /* ===== PRICING ===== */
+        .get-subscription { padding: 60px 0; background: white; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+        .pricing-card {
+            background: var(--light-bg);
+            padding: 28px 20px 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition);
+            position: relative;
+        }
+        .pricing-card:hover { transform: translateY(-4px); }
+        .pricing-card.popular {
+            background: #1f2937;
+            color: white;
+            border: 2px solid var(--orange);
+        }
+        .pricing-card.popular .plan-name { color: white; }
+        .pricing-card.popular .price { color: white; }
+        .pricing-card.popular .price-per-month { color: #d1d5db; }
+        .pricing-card.popular .features li { color: #e5e7eb; }
+
+        .popular-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: white;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            align-self: center;
+        }
+        .save-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e3a8a;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            align-self: center;
+        }
+        .plan-name { font-weight: 700; font-size: 1.2rem; color: #1f2937; margin-bottom: 4px; }
+        .price { font-size: 2.4rem; font-weight: 800; color: var(--orange); }
+        .price small { font-size: 1rem; font-weight: 500; color: var(--gray); }
+        .price-per-month { font-size: 0.85rem; color: var(--gray); margin-bottom: 16px; }
+        .features { list-style: none; text-align: left; margin: 12px 0 20px; flex:1; }
+        .features li { padding: 4px 0; border-bottom: 1px solid #e5e7eb; font-size: 0.9rem; }
+        .features li:last-child { border-bottom: none; }
+
+        /* ===== BEST PROVIDER ===== */
+        .best-provider { padding: 60px 0; background: #f0fdf4; }
+        .best-provider-grid { max-width: 900px; margin: 0 auto; }
+        .best-provider-content { text-align: center; }
+        .best-provider-content .lead { font-size: 1.2rem; margin: 10px 0 16px; color: #1f2937; }
+        .best-provider-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin: 24px 0 28px;
+        }
+        .best-provider-badge {
+            background: white;
+            padding: 6px 20px 6px 14px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            font-weight: 500;
+        }
+        .best-provider-badge .icon { font-size: 1.2rem; }
+
+        /* ===== DEVICES ===== */
+        .devices { padding: 60px 0; background: white; }
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+            gap: 20px;
+        }
+        .device-card {
+            background: var(--light-bg);
+            padding: 20px 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition);
+        }
+        .device-card:hover { transform: translateY(-4px); }
+        .device-card .icon { font-size: 2.2rem; display: block; margin-bottom: 4px; }
+        .device-name { font-weight: 700; font-size: 1.05rem; }
+        .device-model { font-size: 0.85rem; color: var(--gray); }
+        .device-keywords { font-size: 0.75rem; color: var(--orange); font-weight: 600; margin-top: 4px; }
+
+        /* ===== IPTV PLAYERS ===== */
+        .iptv-players { padding: 60px 0; background: #f9fafb; }
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+            gap: 24px;
+        }
+        .player-card {
+            background: white;
+            padding: 22px 16px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform var(--transition);
+        }
+        .player-card:hover { transform: translateY(-4px); }
+        .player-card .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
+        .player-name { font-weight: 700; font-size: 1.1rem; }
+        .player-desc { font-size: 0.9rem; color: #4b5563; margin: 6px 0 10px; }
+        .player-badge {
+            display: inline-block;
+            background: #e5f4e5;
+            color: var(--green);
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        /* ===== PAYMENT ===== */
+        .payment { padding: 60px 0; background: white; }
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .payment-card {
+            background: var(--light-bg);
+            padding: 18px 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .payment-card .icon { font-size: 2rem; display: block; }
+        .payment-name { font-weight: 700; }
+        .payment-desc { font-size: 0.8rem; color: var(--gray); }
+        .payment-trust {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+            background: #f0fdf4;
+            padding: 14px 24px;
+            border-radius: 60px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .payment-trust .trust-text { background: transparent; box-shadow: none; padding: 0; font-weight: 500; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 70px 0;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+        }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 12px; }
+        .cta-section p { max-width: 640px; margin: 0 auto 28px; font-size: 1.1rem; color: #d1d5db; }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== FREE TRIAL ===== */
+        .free-trial-section {
+            padding: 60px 0;
+            background: linear-gradient(145deg, #f0fdf4, #ffffff);
+            text-align: center;
+        }
+        .free-trial-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+
+        /* ===== FAQ ===== */
+        .faq { padding: 60px 0; background: white; }
+        .faq-list { max-width: 720px; margin: 0 auto; }
+        .faq-item {
+            background: var(--light-bg);
+            margin-bottom: 12px;
+            border-radius: 12px;
+            padding: 6px 18px;
+            box-shadow: var(--shadow);
+        }
+        .faq-item summary {
+            font-weight: 700;
+            padding: 14px 0;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: "▾"; font-size: 1.2rem; color: var(--orange); }
+        .faq-item[open] summary::after { content: "▴"; }
+        .faq-item .answer { padding: 0 0 18px; color: #374151; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #111827;
+            color: #e5e7eb;
+            padding: 48px 0 20px;
+            border-top: 1px solid #2d3748;
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .footer-brand { max-width: 280px; }
+        .footer-brand .logo { color: white; font-size: 1.4rem; }
+        .footer-brand p { font-size: 0.9rem; color: #9ca3af; margin-top: 8px; line-height: 1.5; }
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .footer-column h4 {
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        .footer-column a {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 3px 0;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: white; }
+        .footer-contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer-contact-items .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .footer-contact-items .contact-item:hover { color: white; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 28px;
+            margin-top: 28px;
+            border-top: 1px solid #2d3748;
+            font-size: 0.85rem;
+            color: #6b7280;
+            letter-spacing: 0.2px;
+        }
+        .footer-bottom a {
+            color: #6b7280;
+            text-decoration: none;
+        }
+        .footer-bottom a:hover { color: #e5e7eb; }
+
+        @media (max-width: 768px) {
+            .footer .container { flex-direction: column; gap: 30px; }
+            .footer-columns { flex-direction: column; gap: 24px; }
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #25d366;
+            color: white;
+            width: 64px;
+            height: 64px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+            text-decoration: none;
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .whatsapp-float:hover { transform: scale(1.08); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.6rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .cta-section h2 { font-size: 1.6rem; }
+        }
+    </style>
 </head>
 <body>
 
@@ -22,7 +645,7 @@
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html" style="color: var(--orange); font-weight: 700;">IPTV</a></li>
-                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="reviews.html">IPTV Reviews</a></li>
                 <li><a href="reseller.html">IPTV Reseller</a></li>
                 <li><a href="support.html">IPTV Support</a></li>
@@ -39,7 +662,7 @@
                 </div>
                 <h1>
                     <span class="highlight-green">IPTV</span><span class="highlight-orange">SA</span>
-                    <span class="highlight-white">– The Best IPTV Subscription in South Africa 2026</span>
+                    <span class="highlight-white">– The Best IPTV Smarters Pro Subscription 2026</span>
                 </h1>
                 <p class="description">
                     <strong>IPTVSA</strong> comes with a premium IPTV subscription for the people in South Africa.
@@ -48,7 +671,7 @@
                     <strong>4K</strong> and <strong>HD</strong> quality.
                 </p>
                 <div class="hero-buttons">
-                    <a href="index.html#pricing" class="btn-primary">View Pricing</a>
+                    <a href="#pricing" class="btn-primary">View Pricing</a>
                     <a href="#free-trial" class="btn-secondary">Free Trial</a>
                 </div>
                 <div class="trust-badges">
@@ -82,10 +705,10 @@
         </div>
     </section>
 
-    <!-- ===== WHAT'S INCLUDED / CHANNELS SECTION ===== -->
+    <!-- ===== WHAT'S INCLUDED / CHANNELS ===== -->
     <section class="included" id="included">
         <div class="container">
-            <h2 class="section-title">What's Included in Our <span class="green">IPTV</span> <span class="orange">South Africa</span> Subscription</h2>
+            <h2 class="section-title">What's Included in Our <span class="green">IPTV</span> <span class="orange">Smarters Pro</span> Subscription</h2>
             <p class="section-sub">
                 Our IPTV subscription comes with more than <strong>30,000+ live channels</strong>, movies, and series. 
                 It covers not only all local South African channels but also channels from other countries, so you don't 
@@ -103,13 +726,13 @@
                     <span class="flag">🇬🇧</span>
                     <h3>United Kingdom</h3>
                     <div class="channels-count">60+ Channels</div>
-                    <p>Experience world-class British television with top entertainment, live sports, and breaking news. Catch every Premier League match in crystal clear quality.</p>
+                    <p>Experience world-class British television with top entertainment, live sports, and breaking news. Catch every match in crystal clear quality.</p>
                 </div>
                 <div class="channel-card">
                     <span class="flag">🇺🇸</span>
                     <h3>United States</h3>
                     <div class="channels-count">70+ Channels</div>
-                    <p>Stay connected to American culture with top news networks, live sports like NBA and NFL, blockbuster movies, and premium entertainment.</p>
+                    <p>Stay connected to American culture with top news networks, live sports ,blockbuster movies, and premium entertainment.</p>
                 </div>
                 <div class="channel-card">
                     <span class="flag">🇮🇳</span>
@@ -145,12 +768,12 @@
         </div>
     </section>
 
-    <!-- ===== GET YOUR IPTV SUBSCRIPTION SECTION ===== -->
+    <!-- ===== GET YOUR IPTV SUBSCRIPTION ===== -->
     <section class="get-subscription" id="pricing">
         <div class="container">
             <h2 class="section-title">Get Your <span class="green">IPTV</span> <span class="orange">Subscription</span></h2>
             <p class="section-sub">
-                <strong>IPTV South Africa</strong> provides you the best quality as well as all smart IPTV players compatibility in affordable rates and becomes the <strong>best IPTV provider in South Africa</strong>. Choose the perfect plan for your needs and start streaming today.
+                <strong>IPTV SA</strong> provides you the best quality as well as all smart IPTV players compatibility in affordable rates and becomes the <strong>best IPTV provider in South Africa</strong>. Choose the perfect plan for your needs and start streaming today.
             </p>
             <div class="pricing-grid">
                 <div class="pricing-card">
@@ -211,12 +834,12 @@
         </div>
     </section>
 
-    <!-- ===== BEST PROVIDER SECTION ===== -->
+    <!-- ===== BEST PROVIDER ===== -->
     <section class="best-provider" id="best-provider">
         <div class="container">
             <div class="best-provider-grid">
                 <div class="best-provider-content">
-                    <h2 class="section-title">Why <span class="green">IPTV South Africa</span> is the <span class="orange">Best</span> Service Provider?</h2>
+                    <h2 class="section-title">Why <span class="green">IPTV Smarters Pro</span> Subscription <span class="orange">is the Best?</span></h2>
                     <p class="lead">
                         <strong>IPTVSA</strong> uses high-speed servers and advanced streaming technology to provide a smooth and reliable viewing experience with minimal buffering.
                     </p>
@@ -251,10 +874,10 @@
         </div>
     </section>
 
-    <!-- ===== DEVICES SECTION ===== -->
+    <!-- ===== DEVICES ===== -->
     <section class="devices" id="devices">
         <div class="container">
-            <h2 class="section-title"><span class="green">IPTV South Africa</span> Works on <span class="orange">All Devices</span></h2>
+            <h2 class="section-title">Our <span class="green">IPTV Subscription</span> Works on <span class="orange">All Devices</span></h2>
             <p class="section-sub">
                 <strong>Watch IPTVSA on Your Favourite Device</strong><br>
                 Enjoy IPTVSA wherever you prefer to watch. Our service is designed to work across a wide range of popular devices, giving you the flexibility to stream your favourite channels, movies, and series on the screen that suits you best.
@@ -312,7 +935,7 @@
         </div>
     </section>
 
-    <!-- ===== IPTV PLAYERS SECTION ===== -->
+    <!-- ===== IPTV PLAYERS ===== -->
     <section class="iptv-players" id="players">
         <div class="container">
             <h2 class="section-title"><span class="green">IPTV Smarters Pro</span> &amp; Other <span class="orange">Smart IPTV Players</span></h2>
@@ -360,7 +983,7 @@
         </div>
     </section>
 
-    <!-- ===== PAYMENT SECTION ===== -->
+    <!-- ===== PAYMENT ===== -->
     <section class="payment" id="payment">
         <div class="container">
             <h2 class="section-title">We Accept <span class="green">Payment</span> via <span class="orange">These Channels</span></h2>
@@ -401,29 +1024,29 @@
         </div>
     </section>
 
-    <!-- ===== STRONG CTA SECTION ===== -->
+    <!-- ===== STRONG CTA ===== -->
     <section class="cta-section" id="cta">
         <div class="container">
-            <h2>Ready to Experience the <span class="green">Best IPTV</span> in <span class="orange">South Africa?</span></h2>
+            <h2>Ready to Experience the <span class="green">Best IPTV Smarters Pro</span> <span class="orange">Subscription?</span></h2>
             <p>
-                Join thousands of happy customers who are already enjoying premium 4K streaming, thousands of channels, and unbeatable prices. Get started today with a <strong>FREE 24-hour trial</strong> — no credit card required.
+                Join thousands of happy customers who are already enjoying premium 4K streaming, thousands of channels, and unbeatable prices. Get started today with a <strong>Free 24-hour trial</strong> — no credit card required.
             </p>
             <div class="cta-buttons">
                 <a href="#free-trial" class="btn-cta-large">🚀 Start Your Free Trial</a>
-                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20start%20my%20FREE%20IPTV%20SA%20trial" class="btn-secondary" target="_blank" style="padding: 18px 40px; font-size: 1.1rem;">
+                <a href="#free-trial" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;">
                     💬 Chat on WhatsApp
                 </a>
             </div>
             <p style="color: #888; margin-top: 20px; font-size: 0.9rem;">
-                ⚡ 24-hour free trial • No credit card required • Cancel anytime
+                ⚡ Free 24-hour trial • No credit card required • Cancel anytime
             </p>
         </div>
     </section>
 
-    <!-- ===== FREE TRIAL SECTION ===== -->
+    <!-- ===== FREE TRIAL ===== -->
     <section class="free-trial-section" id="free-trial">
         <div class="container">
-            <h2 class="section-title">Start Your <span style="color:var(--orange);">FREE Trial</span> with <span style="color:var(--green);">IPTV SA</span></h2>
+            <h2 class="section-title">Start Your <span style="color:var(--orange);">Free Trial</span> with <span style="color:var(--green);">IPTV SA</span></h2>
             <p class="section-sub">
                 Try IPTV SA completely free for 24 hours. No credit card required. Experience the best IPTV subscription South Africa has to offer.
             </p>
@@ -431,12 +1054,12 @@
                 <a href="#" class="btn-primary" style="padding: 18px 50px; font-size: 1.1rem;">
                     🚀 Claim Your Free Trial
                 </a>
-                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20start%20my%20FREE%20IPTV%20SA%20trial" class="btn-secondary" target="_blank" style="padding: 18px 40px; font-size: 1.1rem;">
+                <a href="#" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;">
                     💬 Chat on WhatsApp
                 </a>
             </div>
             <p style="text-align:center; color:var(--gray); margin-top: 16px; font-size:0.9rem;">
-                ⚡ 24-hour free trial • No credit card required • Cancel anytime
+                ⚡ Free 24-hour trial • No credit card required • Cancel anytime
             </p>
         </div>
     </section>
@@ -495,36 +1118,53 @@
                     <span class="flag">🇿🇦</span>
                     <span class="green">IPTV</span><span class="orange">SA</span>
                 </a>
-                <p>The best IPTV subscription in South Africa. Premium 4K streaming for all.</p>
+                <p>Premium IPTV subscription for South Africa. 4K streaming, 30,000+ channels, and 24/7 support.</p>
             </div>
-            <div class="footer-contact">
-                <a href="https://wa.me/923020548889" class="contact-item" target="_blank">
-                    <span class="icon">💬</span>
-                    <span>+92 302 0548889</span>
-                </a>
-                <a href="mailto:codesfatima@gmail.com" class="contact-item">
-                    <span class="icon">✉️</span>
-                    <span>codesfatima@gmail.com</span>
-                </a>
-            </div>
-            <div class="footer-links">
-                <a href="index.html">IPTV</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="reviews.html">IPTV Reviews</a>
-                <a href="reseller.html">IPTV Reseller</a>
-                <a href="support.html">IPTV Support</a>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">IPTV</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="reviews.html">IPTV Reviews</a>
+                    <a href="reseller.html">IPTV Reseller</a>
+                    <a href="support.html">IPTV Support</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Refund Policy</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <div class="footer-contact-items">
+                        <a href="#" class="contact-item">
+                            <span class="icon">💬</span>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="mailto:codesfatima@gmail.com" class="contact-item">
+                            <span class="icon">✉️</span>
+                            <span>codesfatima@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 IPTV SA. All rights reserved. &bull; Made with ❤️ in South Africa 🇿🇦
+            &copy; 2026 <a href="index.html">IPTV SA</a>. All rights reserved.
         </div>
     </footer>
 
     <!-- ===== WHATSAPP FLOATING BUTTON ===== -->
-    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <a href="#" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
         💬
     </a>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile nav toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
