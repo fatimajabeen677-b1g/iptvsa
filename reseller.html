@@ -8,10 +8,497 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #00c853;
+            --orange: #ff6d00;
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --white: #ffffff;
+            --light-gray: #e0e0e0;
+            --gray: #888888;
+            --shadow: 0 8px 30px rgba(0,0,0,0.3);
+            --radius: 20px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: var(--dark-gray);
+            padding: 14px 0;
+            border-bottom: 2px solid var(--orange);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .logo .flag { font-size: 1.8rem; line-height: 1; }
+        .logo .green { color: var(--green); }
+        .logo .orange { color: var(--orange); }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 4px 12px;
+            margin-left: auto;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-left: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light-gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                justify-content: space-between;
+                gap: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 20px 0 12px;
+                gap: 16px;
+                border-top: 1px solid var(--medium-gray);
+                margin-top: 12px;
+                order: 3;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--orange);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 2px solid var(--orange);
+            transition: background var(--transition), color var(--transition);
+        }
+        .btn-secondary:hover { background: var(--orange); color: var(--black); }
+
+        .btn-reseller-cta {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--black);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition), transform 0.15s;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-reseller-cta:hover { background: #ff9100; transform: scale(1.02); }
+
+        .btn-buy-reseller {
+            display: inline-block;
+            background: var(--green);
+            color: var(--black);
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition), transform 0.15s;
+        }
+        .btn-buy-reseller:hover { background: #00e676; transform: scale(1.02); }
+
+        .btn-cta-large {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--black);
+            font-weight: 800;
+            padding: 18px 48px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background var(--transition), transform 0.15s;
+        }
+        .btn-cta-large:hover { background: #ff9100; transform: scale(1.02); }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+        .section-title .green { color: var(--green); }
+        .section-title .orange { color: var(--orange); }
+
+        .section-sub {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 40px;
+            color: var(--gray);
+            font-size: 1.05rem;
+        }
+
+        /* ===== RESELLER HERO ===== */
+        .reseller-hero {
+            padding: 70px 0 50px;
+            background: linear-gradient(145deg, var(--black) 0%, var(--dark-gray) 100%);
+            border-bottom: 1px solid var(--medium-gray);
+            text-align: center;
+        }
+        .reseller-hero .badge {
+            display: inline-block;
+            background: var(--medium-gray);
+            color: var(--orange);
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            border: 1px solid var(--orange);
+        }
+        .reseller-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+        .reseller-hero h1 .green { color: var(--green); }
+        .reseller-hero h1 .orange { color: var(--orange); }
+        .reseller-hero p {
+            font-size: 1.15rem;
+            color: var(--light-gray);
+            max-width: 750px;
+            margin: 0 auto 28px;
+        }
+        .reseller-hero .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 640px) {
+            .reseller-hero h1 { font-size: 2rem; }
+        }
+
+        /* ===== WHY RESELLER SA ===== */
+        .why-reseller-sa {
+            padding: 60px 0;
+            background: var(--black);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .sa-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .sa-benefit-card {
+            background: var(--dark-gray);
+            padding: 28px 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            transition: transform var(--transition), border-color var(--transition);
+        }
+        .sa-benefit-card:hover { transform: translateY(-4px); border-color: var(--orange); }
+        .sa-benefit-card .icon { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+        .sa-benefit-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--white); }
+        .sa-benefit-card p { font-size: 0.9rem; color: var(--gray); }
+
+        /* ===== WHY RESELLER ===== */
+        .why-reseller {
+            padding: 60px 0;
+            background: var(--dark-gray);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .reseller-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .benefit-card {
+            background: var(--black);
+            padding: 28px 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            transition: transform var(--transition), border-color var(--transition);
+        }
+        .benefit-card:hover { transform: translateY(-4px); border-color: var(--green); }
+        .benefit-card .icon { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+        .benefit-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--white); }
+        .benefit-card p { font-size: 0.9rem; color: var(--gray); }
+
+        /* ===== PRICING RESELLER ===== */
+        .pricing-reseller {
+            padding: 60px 0;
+            background: var(--black);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .pricing-grid-reseller {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+        .pricing-card-reseller {
+            background: var(--dark-gray);
+            padding: 28px 20px 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition), border-color var(--transition);
+            position: relative;
+        }
+        .pricing-card-reseller:hover { transform: translateY(-4px); border-color: var(--orange); }
+        .pricing-card-reseller.popular {
+            border: 2px solid var(--orange);
+            background: var(--dark-gray);
+        }
+        .pricing-card-reseller .plan-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .pricing-card-reseller .credit-amount {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--orange);
+        }
+        .pricing-card-reseller .credit-amount small {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        .pricing-card-reseller .price-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+        .pricing-card-reseller .features {
+            list-style: none;
+            text-align: left;
+            margin: 12px 0 20px;
+            flex: 1;
+        }
+        .pricing-card-reseller .features li {
+            padding: 4px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+        .pricing-card-reseller .features li:last-child { border-bottom: none; }
+
+        .popular-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--black);
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            align-self: center;
+        }
+
+        /* ===== CTA RESELLER ===== */
+        .cta-reseller {
+            padding: 70px 0;
+            background: var(--dark-gray);
+            border-top: 2px solid var(--orange);
+            border-bottom: 2px solid var(--orange);
+            text-align: center;
+        }
+        .cta-reseller h2 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+        .cta-reseller h2 .green { color: var(--green); }
+        .cta-reseller h2 .orange { color: var(--orange); }
+        .cta-reseller p {
+            max-width: 640px;
+            margin: 0 auto 28px;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+        .cta-reseller .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .cta-reseller h2 { font-size: 1.6rem; }
+            .pricing-grid-reseller { grid-template-columns: 1fr; }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--black);
+            color: var(--light-gray);
+            padding: 48px 0 20px;
+            border-top: 2px solid var(--orange);
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .footer-brand { max-width: 280px; }
+        .footer-brand .logo { color: var(--white); font-size: 1.4rem; }
+        .footer-brand p { font-size: 0.9rem; color: var(--gray); margin-top: 8px; line-height: 1.5; }
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .footer-column h4 {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        .footer-column a {
+            display: block;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 3px 0;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: var(--orange); }
+        .footer-contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer-contact-items .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .footer-contact-items .contact-item:hover { color: var(--orange); }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 28px;
+            margin-top: 28px;
+            border-top: 1px solid var(--medium-gray);
+            font-size: 0.85rem;
+            color: var(--gray);
+            letter-spacing: 0.2px;
+        }
+        .footer-bottom a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+        .footer-bottom a:hover { color: var(--orange); }
+
+        @media (max-width: 768px) {
+            .footer .container { flex-direction: column; gap: 30px; }
+            .footer-columns { flex-direction: column; gap: 24px; }
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #25d366;
+            color: var(--black);
+            width: 64px;
+            height: 64px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .whatsapp-float:hover { transform: scale(1.08); }
+    </style>
 </head>
 <body>
 
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
@@ -29,10 +516,11 @@
         </div>
     </nav>
 
+    <!-- ===== RESELLER HERO ===== -->
     <section class="reseller-hero">
         <div class="container">
             <div class="badge">🚀 Start Your Own IPTV Business</div>
-            <h1><span class="green">IPTV South Africa</span> <span class="orange">Reseller Program</span></h1>
+            <h1><span class="green">IPTV SA</span> <span class="orange">Reseller Program</span></h1>
             <p>
                 Join the IPTV SA reseller program and start earning up to <strong>3x profit</strong> on every sale.
                 <strong>Advanced reseller panel</strong>, <strong>full technical support</strong>,
@@ -46,6 +534,7 @@
         </div>
     </section>
 
+    <!-- ===== WHY RESELLER SA ===== -->
     <section class="why-reseller-sa">
         <div class="container">
             <h2 class="section-title">Why Become an <span class="orange">IPTV Reseller</span> in <span class="green">South Africa?</span></h2>
@@ -85,6 +574,7 @@
         </div>
     </section>
 
+    <!-- ===== WHAT YOU GET ===== -->
     <section class="why-reseller">
         <div class="container">
             <h2 class="section-title">What You Get as an <span class="orange">IPTV SA</span> Reseller</h2>
@@ -124,6 +614,7 @@
         </div>
     </section>
 
+    <!-- ===== PRICING RESELLER ===== -->
     <section class="pricing-reseller" id="pricing-reseller">
         <div class="container">
             <h2 class="section-title">Choose Your <span class="green">IPTV SA</span> <span class="orange">Reseller Plan</span></h2>
@@ -179,43 +670,76 @@
         </div>
     </section>
 
+    <!-- ===== CTA RESELLER ===== -->
     <section class="cta-reseller" id="cta-reseller">
         <div class="container">
-            <h2>Join the <span class="green">IPTV South Africa</span> <span class="orange">Reseller Program</span></h2>
+            <h2>Join the <span class="green">IPTV SA</span> <span class="orange">Reseller Program</span></h2>
             <p>
-                Join the IPTV South Africa reseller program and start earning up to <strong>3x profit</strong> today. Get access to our <strong>advanced reseller panel</strong>, <strong>flexible credit system</strong>, and <strong>full technical support</strong>. No hidden fees, no commitments — just pure opportunity.
+                Join the IPTV SA reseller program and start earning up to <strong>3x profit</strong> today. Get access to our <strong>advanced reseller panel</strong>, <strong>flexible credit system</strong>, and <strong>full technical support</strong>. No hidden fees, no commitments — just pure opportunity.
             </p>
             <div class="cta-buttons">
                 <a href="#pricing-reseller" class="btn-cta-large">🚀 Get Started Now</a>
                 <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20become%20an%20IPTV%20SA%20reseller" class="btn-secondary" target="_blank" style="padding: 18px 40px; font-size: 1.1rem;">💬 Chat on WhatsApp</a>
             </div>
-            <p style="color: #888; margin-top: 20px; font-size: 0.9rem;">🔒 No monthly fees • No hidden costs • Cancel anytime • 24/7 support included</p>
+            <p style="color: var(--gray); margin-top: 20px; font-size: 0.9rem;">🔒 No monthly fees • No hidden costs • Cancel anytime • 24/7 support included</p>
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-brand">
-                <a href="index.html" class="logo"><span class="flag">🇿🇦</span><span class="green">IPTV</span><span class="orange">SA</span></a>
-                <p>The best IPTV subscription in South Africa. Premium 4K streaming for all.</p>
+                <a href="index.html" class="logo">
+                    <span class="flag">🇿🇦</span>
+                    <span class="green">IPTV</span><span class="orange">SA</span>
+                </a>
+                <p>Premium IPTV subscription for South Africa. 4K streaming, 30,000+ channels, and 24/7 support.</p>
             </div>
-            <div class="footer-contact">
-                <a href="https://wa.me/923020548889" class="contact-item" target="_blank"><span class="icon">💬</span><span>+92 302 0548889</span></a>
-                <a href="mailto:codesfatima@gmail.com" class="contact-item"><span class="icon">✉️</span><span>codesfatima@gmail.com</span></a>
-            </div>
-            <div class="footer-links">
-                <a href="index.html">IPTV</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="reviews.html">IPTV Reviews</a>
-                <a href="reseller.html">IPTV Reseller</a>
-                <a href="support.html">IPTV Support</a>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">IPTV</a>
+                    <a href="index.html#pricing">Pricing</a>
+                    <a href="reviews.html">IPTV Reviews</a>
+                    <a href="reseller.html">IPTV Reseller</a>
+                    <a href="support.html">IPTV Support</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Refund Policy</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <div class="footer-contact-items">
+                        <a href="https://wa.me/923020548889" class="contact-item" target="_blank">
+                            <span class="icon">💬</span>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="mailto:codesfatima@gmail.com" class="contact-item">
+                            <span class="icon">✉️</span>
+                            <span>codesfatima@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">&copy; 2026 IPTV SA. All rights reserved. &bull; Made with ❤️ in South Africa 🇿🇦</div>
+        <div class="footer-bottom">
+            &copy; 2026 <a href="index.html">IPTV SA</a>. All rights reserved.
+        </div>
     </footer>
 
-    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20become%20an%20IPTV%20SA%20reseller" class="whatsapp-float" target="_blank">💬</a>
+    <!-- ===== WHATSAPP FLOATING BUTTON ===== -->
+    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20become%20an%20IPTV%20SA%20reseller" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        💬
+    </a>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile nav toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
