@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://iptvsa.co.za/sitemap.xml
+Sitemap: https://tviptvsa.co.za/sitemap.xml
