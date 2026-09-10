@@ -283,12 +283,25 @@ body {
     letter-spacing: -0.5px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+}
+
+/* ===== LOGO IMAGE ===== */
+.logo .logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: contain;
 }
 
 .logo .green { color: var(--green); }
 .logo .orange { color: var(--orange); }
-.logo .flag { font-size: 1.8rem; line-height: 1; }
+
+/* Footer logo slightly smaller */
+.footer .logo .logo-img {
+    height: 36px;
+}
 
 .nav-toggle {
     display: none;
@@ -1454,6 +1467,8 @@ body {
 
 @media (max-width: 768px) {
     .navbar .container { flex-direction: row; gap: 10px; }
+    .logo .logo-img { height: 32px; }
+    .footer .logo .logo-img { height: 28px; }
     .included-grid { grid-template-columns: 1fr 1fr; }
     .section-title { font-size: 1.8rem; }
     .hero { padding: 30px 0 20px; }
@@ -1497,6 +1512,8 @@ body {
 @media (max-width: 480px) {
     .hero-content h1 { font-size: 1.5rem; }
     .container { padding: 0 16px; }
+    .logo .logo-img { height: 28px; }
+    .footer .logo .logo-img { height: 24px; }
     .trust-badges { flex-direction: column; align-items: center; gap: 10px; }
     .trust-text { text-align: center; }
     .included-grid { grid-template-columns: 1fr; }
