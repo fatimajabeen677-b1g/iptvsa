@@ -6,11 +6,15 @@
     <title>IPTVSA Reseller Program – Start Your Own IPTV Business</title>
     <meta name="description" content="Become an IPTV SA reseller and earn up to 3x profit. Advanced reseller panel, full support, flexible credit system, and no inventory required." />
     <link rel="canonical" href="https://tviptvsa.co.za/reseller/" />
+    <link rel="icon" type="image/png" href="/Flag-South-Africa.png" />
+    <link rel="apple-touch-icon" href="/Flag-South-Africa.png" />
     <meta property="og:title" content="IPTVSA Reseller Program – Start Your Own IPTV Business" />
     <meta property="og:description" content="Become an IPTV SA reseller and earn up to 3x profit. Advanced reseller panel, full support, flexible credit system." />
     <meta property="og:url" content="https://tviptvsa.co.za/reseller/" />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://tviptvsa.co.za/Flag-South-Africa.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://tviptvsa.co.za/Flag-South-Africa.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
@@ -70,7 +74,7 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
             font-weight: 800;
             font-size: 1.6rem;
@@ -78,7 +82,14 @@
             flex-shrink: 0;
         }
 
-        .logo .flag { font-size: 1.8rem; line-height: 1; }
+        .logo .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
         .logo .green { color: var(--green); }
         .logo .orange { color: var(--orange); }
 
@@ -139,6 +150,9 @@
             .nav-links a {
                 font-size: 1.1rem;
                 padding: 4px 0;
+            }
+            .logo .logo-img {
+                height: 32px;
             }
         }
 
@@ -417,6 +431,9 @@
                 flex-direction: column;
                 align-items: center;
             }
+            .logo .logo-img {
+                height: 28px;
+            }
         }
 
         .footer {
@@ -433,6 +450,7 @@
         }
         .footer-brand { max-width: 280px; }
         .footer-brand .logo { color: var(--white); font-size: 1.4rem; }
+        .footer-brand .logo .logo-img { height: 36px; }
         .footer-brand p { font-size: 0.9rem; color: var(--gray); margin-top: 8px; line-height: 1.5; }
         .footer-columns {
             display: flex;
@@ -488,6 +506,7 @@
         @media (max-width: 768px) {
             .footer .container { flex-direction: column; gap: 30px; }
             .footer-columns { flex-direction: column; gap: 24px; }
+            .footer-brand .logo .logo-img { height: 28px; }
         }
 
         .whatsapp-float {
@@ -527,7 +546,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="/" class="logo">
-                <span class="flag">🇿🇦</span>
+                <img src="/Flag-South-Africa.png" alt="IPTVSA South Africa Flag" class="logo-img">
                 <span class="green">IPTV</span><span class="orange">SA</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">☰</button>
@@ -714,7 +733,7 @@
         <div class="container">
             <div class="footer-brand">
                 <a href="/" class="logo">
-                    <span class="flag">🇿🇦</span>
+                    <img src="/Flag-South-Africa.png" alt="IPTVSA South Africa Flag" class="logo-img">
                     <span class="green">IPTV</span><span class="orange">SA</span>
                 </a>
                 <p>Premium IPTV subscription for South Africa. 4K streaming, 30,000+ channels, and 24/7 support.</p>
