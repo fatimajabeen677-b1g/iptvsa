@@ -6,11 +6,15 @@
     <title>IPTVSA – Best IPTV Smarters Pro Subscription 2026</title>
     <meta name="description" content="IPTVSA – The best IPTV subscription in South Africa. Premium IPTV with 4K quality, 5-minute setup, less than DStv, and zero downtime. Works with IPTV Smarters Pro, TiviMate & more." />
     <link rel="canonical" href="https://tviptvsa.co.za/" />
+    <link rel="icon" type="image/png" href="Flag-South-Africa.png" />
+    <link rel="apple-touch-icon" href="Flag-South-Africa.png" />
     <meta property="og:title" content="IPTVSA – Best IPTV Smarters Pro Subscription 2026" />
     <meta property="og:description" content="IPTVSA – The best IPTV subscription in South Africa. Premium IPTV with 4K quality, 5-minute setup, less than DStv, and zero downtime." />
     <meta property="og:url" content="https://tviptvsa.co.za/" />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://tviptvsa.co.za/Flag-South-Africa.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://tviptvsa.co.za/Flag-South-Africa.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
@@ -72,7 +76,7 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
             font-weight: 800;
             font-size: 1.6rem;
@@ -80,7 +84,14 @@
             flex-shrink: 0;
         }
 
-        .logo .flag { font-size: 1.8rem; line-height: 1; }
+        .logo .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
         .logo .green { color: var(--green); }
         .logo .orange { color: var(--orange); }
 
@@ -141,6 +152,9 @@
             .nav-links a {
                 font-size: 1.1rem;
                 padding: 4px 0;
+            }
+            .logo .logo-img {
+                height: 32px;
             }
         }
 
@@ -678,7 +692,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="/" class="logo">
-                <span class="flag">🇿🇦</span>
+                <img src="Flag-South-Africa.png" alt="IPTVSA South Africa Flag" class="logo-img">
                 <span class="green">IPTV</span><span class="orange">SA</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">☰</button>
@@ -1153,7 +1167,7 @@
         <div class="container">
             <div class="footer-brand">
                 <a href="/" class="logo">
-                    <span class="flag">🇿🇦</span>
+                    <img src="Flag-South-Africa.png" alt="IPTVSA South Africa Flag" class="logo-img">
                     <span class="green">IPTV</span><span class="orange">SA</span>
                 </a>
                 <p>Premium IPTV subscription for South Africa. 4K streaming, 30,000+ channels, and 24/7 support.</p>
@@ -1197,15 +1211,6 @@
         💬
     </a>
 
-    <script>
-        document.getElementById('navToggle').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
