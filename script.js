@@ -14,12 +14,32 @@ if (toggleBtn && navLinks) {
     });
 }
 
-// ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+// ===== SMOOTH SCROLL FOR ANCHOR LINKS (fixes /#pricing too) =====
+document.querySelectorAll('a[href*="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        const targetElement = document.querySelector(targetId);
+        const href = this.getAttribute('href');
+
+        // Skip bare "#" and external/absolute URLs (except same-page # anchors)
+        if (!href || href === '#') return;
+
+        // Only handle links that end with #something
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+
+        const hash = href.substring(hashIndex);
+        if (hash === '#' || hash.length < 2) return;
+
+        // If the link points to a different page, let it navigate normally
+        const pathPart = href.substring(0, hashIndex);
+        const isSamePage =
+            pathPart === '' ||
+            pathPart === '/' ||
+            pathPart === window.location.pathname ||
+            pathPart === './';
+
+        if (!isSamePage) return;
+
+        const targetElement = document.querySelector(hash);
         if (targetElement) {
             e.preventDefault();
             targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -27,22 +47,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== FAQ ACCORDION (optional enhancement) =====
-document.querySelectorAll('.faq-item summary').forEach(summary => {
-    summary.addEventListener('click', function() {
-        const parent = this.parentElement;
-        const isOpen = parent.hasAttribute('open');
-        // Close all other FAQ items
-        document.querySelectorAll('.faq-item').forEach(item => {
-            if (item !== parent) {
-                item.removeAttribute('open');
-            }
-        });
-        // Toggle current
-        if (isOpen) {
-            parent.removeAttribute('open');
-        } else {
-            parent.setAttribute('open', '');
+// ===== FAQ ACCORDION — only one open at a time =====
+// Use the native 'toggle' event (fires AFTER details opens/closes),
+// so we never fight the browser's built-in behaviour.
+document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', function() {
+        if (this.open) {
+            document.querySelectorAll('.faq-item').forEach(other => {
+                if (other !== this && other.open) {
+                    other.open = false;
+                }
+            });
         }
     });
 });
