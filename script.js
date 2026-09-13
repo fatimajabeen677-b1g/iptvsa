@@ -14,28 +14,29 @@ if (toggleBtn && navLinks) {
     });
 }
 
-// ===== SMOOTH SCROLL FOR ANCHOR LINKS (fixes /#pricing too) =====
+// ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+// Handles both "#pricing" and "/#pricing" style anchors on the same page.
 document.querySelectorAll('a[href*="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
 
-        // Skip bare "#" and external/absolute URLs (except same-page # anchors)
+        // Skip empty or bare "#" links
         if (!href || href === '#') return;
 
-        // Only handle links that end with #something
+        // Find the "#" in the href
         const hashIndex = href.indexOf('#');
         if (hashIndex === -1) return;
 
         const hash = href.substring(hashIndex);
         if (hash === '#' || hash.length < 2) return;
 
-        // If the link points to a different page, let it navigate normally
+        // Check if the link points to the current page (allows "/" and "/#...")
         const pathPart = href.substring(0, hashIndex);
         const isSamePage =
             pathPart === '' ||
             pathPart === '/' ||
-            pathPart === window.location.pathname ||
-            pathPart === './';
+            pathPart === './' ||
+            pathPart === window.location.pathname;
 
         if (!isSamePage) return;
 
@@ -47,11 +48,10 @@ document.querySelectorAll('a[href*="#"]').forEach(anchor => {
     });
 });
 
-// ===== FAQ ACCORDION — only one open at a time =====
-// Use the native 'toggle' event (fires AFTER details opens/closes),
-// so we never fight the browser's built-in behaviour.
+// ===== FAQ ACCORDION (only one open at a time) =====
+// Uses the native "toggle" event so it never fights the browser's <details> behaviour.
 document.querySelectorAll('.faq-item').forEach(item => {
-    item.addEventListener('toggle', function() {
+    item.addEventListener('toggle', function () {
         if (this.open) {
             document.querySelectorAll('.faq-item').forEach(other => {
                 if (other !== this && other.open) {
