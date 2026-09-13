@@ -18,7 +18,527 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/style.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #00c853;
+            --orange: #ff6d00;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e8e8e8;
+            --dark-gray: #d0d0d0;
+            --black: #1a1a1a;
+            --text: #222222;
+            --text-light: #555555;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --radius: 20px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 14px 0;
+            border-bottom: 2px solid var(--orange);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .logo .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+        .logo .green { color: var(--green); }
+        .logo .orange { color: var(--orange); }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 4px 12px;
+            margin-left: auto;
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-left: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                justify-content: space-between;
+                gap: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 20px 0 12px;
+                gap: 16px;
+                border-top: 1px solid var(--medium-gray);
+                margin-top: 12px;
+                order: 3;
+                align-items: flex-start;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 4px 0;
+            }
+            .logo .logo-img {
+                height: 32px;
+            }
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--orange);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 2px solid var(--orange);
+            transition: background var(--transition), color var(--transition);
+        }
+        .btn-secondary:hover { background: var(--orange); color: var(--white); }
+
+        .btn-reseller-cta {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--white);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition), transform 0.15s;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-reseller-cta:hover { background: #e66000; transform: scale(1.02); }
+
+        .btn-buy-reseller {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: background var(--transition), transform 0.15s;
+        }
+        .btn-buy-reseller:hover { background: #00b34a; transform: scale(1.02); }
+
+        .btn-cta-large {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--white);
+            font-weight: 800;
+            padding: 18px 48px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background var(--transition), transform 0.15s;
+        }
+        .btn-cta-large:hover { background: #e66000; transform: scale(1.02); }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        .section-title .green { color: var(--green); }
+        .section-title .orange { color: var(--orange); }
+
+        .section-sub {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 40px;
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        .reseller-hero {
+            padding: 70px 0 50px;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--medium-gray);
+            text-align: center;
+        }
+        .reseller-hero .badge {
+            display: inline-block;
+            background: var(--white);
+            color: var(--orange);
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            border: 1px solid var(--orange);
+        }
+        .reseller-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+        .reseller-hero h1 .green { color: var(--green); }
+        .reseller-hero h1 .orange { color: var(--orange); }
+        .reseller-hero p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 750px;
+            margin: 0 auto 28px;
+        }
+        .reseller-hero .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 640px) {
+            .reseller-hero h1 { font-size: 2rem; }
+        }
+
+        .why-reseller-sa {
+            padding: 60px 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .sa-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .sa-benefit-card {
+            background: var(--light-gray);
+            padding: 28px 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            transition: transform var(--transition), border-color var(--transition);
+        }
+        .sa-benefit-card:hover { transform: translateY(-4px); border-color: var(--orange); }
+        .sa-benefit-card .icon { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+        .sa-benefit-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+        .sa-benefit-card p { font-size: 0.9rem; color: var(--text-light); }
+
+        .why-reseller {
+            padding: 60px 0;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .reseller-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .benefit-card {
+            background: var(--white);
+            padding: 28px 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            transition: transform var(--transition), border-color var(--transition);
+            box-shadow: var(--shadow);
+        }
+        .benefit-card:hover { transform: translateY(-4px); border-color: var(--green); }
+        .benefit-card .icon { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+        .benefit-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+        .benefit-card p { font-size: 0.9rem; color: var(--text-light); }
+
+        .pricing-reseller {
+            padding: 60px 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .pricing-grid-reseller {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+        .pricing-card-reseller {
+            background: var(--light-gray);
+            padding: 28px 20px 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition), border-color var(--transition);
+            position: relative;
+        }
+        .pricing-card-reseller:hover { transform: translateY(-4px); border-color: var(--orange); }
+        .pricing-card-reseller.popular {
+            border: 2px solid var(--orange);
+            background: var(--white);
+        }
+        .pricing-card-reseller .plan-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .pricing-card-reseller .credit-amount {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--orange);
+        }
+        .pricing-card-reseller .credit-amount small {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        .pricing-card-reseller .price-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        .pricing-card-reseller .features {
+            list-style: none;
+            text-align: left;
+            margin: 12px 0 20px;
+            flex: 1;
+        }
+        .pricing-card-reseller .features li {
+            padding: 4px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .pricing-card-reseller .features li:last-child { border-bottom: none; }
+
+        .popular-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--white);
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            align-self: center;
+        }
+
+        .cta-reseller {
+            padding: 70px 0;
+            background: var(--light-gray);
+            border-top: 2px solid var(--orange);
+            border-bottom: 2px solid var(--orange);
+            text-align: center;
+        }
+        .cta-reseller h2 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        .cta-reseller h2 .green { color: var(--green); }
+        .cta-reseller h2 .orange { color: var(--orange); }
+        .cta-reseller p {
+            max-width: 640px;
+            margin: 0 auto 28px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        .cta-reseller .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .cta-reseller h2 { font-size: 1.6rem; }
+            .pricing-grid-reseller { grid-template-columns: 1fr; }
+            .btn-reseller-cta, .btn-secondary, .btn-cta-large {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                width: 100%;
+                max-width: 320px;
+                text-align: center;
+            }
+            .reseller-hero .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .logo .logo-img {
+                height: 28px;
+            }
+        }
+
+        .footer {
+            background: var(--text);
+            color: var(--light-gray);
+            padding: 48px 0 20px;
+            border-top: 2px solid var(--orange);
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .footer-brand { max-width: 280px; }
+        .footer-brand .logo { color: var(--white); font-size: 1.4rem; }
+        .footer-brand .logo .logo-img { height: 36px; }
+        .footer-brand p { font-size: 0.9rem; color: var(--dark-gray); margin-top: 8px; line-height: 1.5; }
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .footer-column h4 {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        .footer-column a {
+            display: block;
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 3px 0;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: var(--orange); }
+        .footer-contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer-contact-items .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .footer-contact-items .contact-item:hover { color: var(--orange); }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 28px;
+            margin-top: 28px;
+            border-top: 1px solid var(--medium-gray);
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            letter-spacing: 0.2px;
+        }
+        .footer-bottom a {
+            color: var(--dark-gray);
+            text-decoration: none;
+        }
+        .footer-bottom a:hover { color: var(--orange); }
+
+        @media (max-width: 768px) {
+            .footer .container { flex-direction: column; gap: 30px; }
+            .footer-columns { flex-direction: column; gap: 24px; }
+            .footer-brand .logo .logo-img { height: 28px; }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #25d366;
+            color: var(--white);
+            width: 64px;
+            height: 64px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .whatsapp-float:hover { transform: scale(1.08); }
+
+        @media (max-width: 480px) {
+            .whatsapp-float {
+                width: 56px;
+                height: 56px;
+                font-size: 2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -174,7 +694,7 @@
                         <li>Dedicated Account Manager</li>
                     </ul>
                     <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20buy%20the%20Business%20Pack%20(150%20credits)%20of%20the%20IPTV%20SA%20Reseller%20Program.%20Please%20send%20me%20the%20details."
-                       class="btn-buy-reseller" style="background: var(--orange);" target="_blank" rel="noopener">Get Started</a>
+                       class="btn-buy-reseller" style="background: var(--orange); box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);" target="_blank" rel="noopener">Get Started</a>
                 </div>
                 <div class="pricing-card-reseller">
                     <div class="plan-name">Enterprise Pack</div>
@@ -266,7 +786,7 @@
     </a>
 
     <script>
-        // Navbar toggle
+        // ===== NAVBAR TOGGLE =====
         document.getElementById('navToggle').addEventListener('click', function() {
             document.getElementById('navLinks').classList.toggle('open');
         });
@@ -276,7 +796,7 @@
             });
         });
 
-        // Smooth scroll for on-page anchors (like #pricing-reseller)
+        // ===== SMOOTH SCROLL for on-page anchors =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
