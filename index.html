@@ -18,673 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
-    <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --green: #00c853;
-            --orange: #ff6d00;
-            --white: #ffffff;
-            --light-gray: #f5f5f5;
-            --medium-gray: #e8e8e8;
-            --dark-gray: #d0d0d0;
-            --black: #1a1a1a;
-            --text: #222222;
-            --text-light: #555555;
-            --shadow: 0 8px 30px rgba(0,0,0,0.08);
-            --radius: 20px;
-            --transition: 0.25s ease;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--white);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            background: var(--white);
-            padding: 14px 0;
-            border-bottom: 2px solid var(--orange);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 32px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.6rem;
-            letter-spacing: -0.5px;
-            flex-shrink: 0;
-        }
-
-        .logo .logo-img {
-            height: 40px;
-            width: auto;
-            display: block;
-            border-radius: 4px;
-            object-fit: contain;
-        }
-
-        .logo .green { color: var(--green); }
-        .logo .orange { color: var(--orange); }
-
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 4px 12px;
-            margin-left: auto;
-            color: var(--text);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-left: 0;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--orange);
-        }
-
-        @media (max-width: 768px) {
-            .navbar .container {
-                justify-content: space-between;
-                gap: 0;
-            }
-            .nav-toggle {
-                display: block;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                padding: 20px 0 12px;
-                gap: 16px;
-                border-top: 1px solid var(--medium-gray);
-                margin-top: 12px;
-                order: 3;
-                align-items: flex-start;
-            }
-            .nav-links.open {
-                display: flex;
-            }
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 4px 0;
-            }
-            .logo .logo-img {
-                height: 32px;
-            }
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn-primary {
-            display: inline-block;
-            background: var(--green);
-            color: var(--white);
-            font-weight: 700;
-            padding: 14px 36px;
-            border-radius: 60px;
-            text-decoration: none;
-            transition: background var(--transition), transform 0.15s;
-            border: none;
-            font-size: 1rem;
-        }
-        .btn-primary:hover { background: #00b34a; transform: scale(1.02); }
-
-        .btn-secondary {
-            display: inline-block;
-            background: transparent;
-            color: var(--orange);
-            font-weight: 700;
-            padding: 14px 36px;
-            border-radius: 60px;
-            text-decoration: none;
-            border: 2px solid var(--orange);
-            transition: background var(--transition), color var(--transition);
-        }
-        .btn-secondary:hover { background: var(--orange); color: var(--white); }
-
-        .btn-buy {
-            display: inline-block;
-            background: var(--orange);
-            color: var(--white);
-            font-weight: 700;
-            padding: 12px 32px;
-            border-radius: 60px;
-            text-decoration: none;
-            transition: background var(--transition);
-        }
-        .btn-buy:hover { background: #e66000; }
-
-        .btn-buy-outline {
-            display: inline-block;
-            background: transparent;
-            color: var(--orange);
-            font-weight: 700;
-            padding: 12px 32px;
-            border-radius: 60px;
-            text-decoration: none;
-            border: 2px solid var(--orange);
-            transition: background var(--transition), color var(--transition);
-        }
-        .btn-buy-outline:hover { background: var(--orange); color: var(--white); }
-
-        .btn-cta-large {
-            display: inline-block;
-            background: var(--orange);
-            color: var(--white);
-            font-weight: 800;
-            padding: 18px 48px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: background var(--transition), transform 0.15s;
-        }
-        .btn-cta-large:hover { background: #e66000; transform: scale(1.02); }
-
-        /* ===== HERO ===== */
-        .hero {
-            padding: 60px 0 40px;
-            background: var(--light-gray);
-            border-bottom: 1px solid var(--medium-gray);
-        }
-        .hero-content { max-width: 900px; margin: 0 auto; text-align: center; }
-
-        .hero-badge {
-            display: inline-block;
-            background: var(--white);
-            color: var(--orange);
-            font-weight: 600;
-            padding: 6px 18px;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-            border: 1px solid var(--orange);
-        }
-        .hero-badge .star { margin-right: 6px; }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 18px;
-            color: var(--text);
-        }
-        .hero h1 .highlight-green { color: var(--green); }
-        .hero h1 .highlight-orange { color: var(--orange); }
-        .hero h1 .highlight-white { color: var(--text); display: block; font-size: 1.6rem; margin-top: 4px; }
-
-        .hero .description {
-            font-size: 1.15rem;
-            color: var(--text-light);
-            max-width: 750px;
-            margin: 0 auto 28px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 36px;
-        }
-
-        .trust-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 28px;
-            margin: 30px 0 20px;
-        }
-        .trust-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--white);
-            padding: 6px 18px 6px 14px;
-            border-radius: 60px;
-            border: 1px solid var(--medium-gray);
-            box-shadow: var(--shadow);
-        }
-        .trust-badge .icon { font-size: 1.4rem; }
-        .trust-badge .label { font-weight: 600; font-size: 0.9rem; display: flex; flex-direction: column; color: var(--text); }
-        .trust-badge .label small { font-weight: 400; font-size: 0.7rem; color: var(--text-light); }
-
-        .trust-text {
-            background: var(--white);
-            padding: 24px 32px;
-            border-radius: var(--radius);
-            border: 1px solid var(--medium-gray);
-            box-shadow: var(--shadow);
-            max-width: 860px;
-            margin: 20px auto 0;
-            text-align: left;
-            font-size: 1rem;
-            color: var(--text-light);
-        }
-        .trust-text .cities { font-weight: 600; color: var(--orange); }
-
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 2rem; }
-            .hero h1 .highlight-white { font-size: 1.2rem; }
-            .trust-badges { gap: 12px; }
-            .trust-badge { padding: 4px 12px; }
-        }
-
-        /* ===== SECTION TITLES ===== */
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-        .section-title .green { color: var(--green); }
-        .section-title .orange { color: var(--orange); }
-
-        .section-sub {
-            text-align: center;
-            max-width: 750px;
-            margin: 0 auto 40px;
-            color: var(--text-light);
-            font-size: 1.05rem;
-        }
-
-        /* ===== INCLUDED / CHANNELS ===== */
-        .included { padding: 60px 0; background: var(--white); }
-        .included-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-            gap: 24px;
-        }
-        .channel-card {
-            background: var(--light-gray);
-            padding: 24px 18px;
-            border-radius: var(--radius);
-            border: 1px solid var(--medium-gray);
-            text-align: center;
-            transition: transform var(--transition), border-color var(--transition);
-        }
-        .channel-card:hover { transform: translateY(-4px); border-color: var(--orange); }
-        .channel-card .flag { font-size: 2.2rem; display: block; margin-bottom: 6px; }
-        .channel-card h3 { font-size: 1.2rem; margin-bottom: 4px; color: var(--text); }
-        .channels-count { font-weight: 700; color: var(--orange); font-size: 0.85rem; margin-bottom: 8px; }
-        .channel-card p { font-size: 0.9rem; color: var(--text-light); }
-
-        /* ===== PRICING ===== */
-        .get-subscription { padding: 60px 0; background: var(--light-gray); }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-            gap: 28px;
-            align-items: stretch;
-        }
-        .pricing-card {
-            background: var(--white);
-            padding: 28px 20px 32px;
-            border-radius: var(--radius);
-            border: 1px solid var(--medium-gray);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            transition: transform var(--transition), border-color var(--transition);
-            position: relative;
-            box-shadow: var(--shadow);
-        }
-        .pricing-card:hover { transform: translateY(-4px); border-color: var(--orange); }
-        .pricing-card.popular {
-            border: 2px solid var(--orange);
-            background: var(--white);
-        }
-        .pricing-card.popular .plan-name { color: var(--text); }
-        .pricing-card.popular .price { color: var(--orange); }
-        .pricing-card.popular .price-per-month { color: var(--text-light); }
-        .pricing-card.popular .features li { color: var(--text); }
-
-        .popular-badge {
-            display: inline-block;
-            background: var(--orange);
-            color: var(--white);
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 60px;
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-            align-self: center;
-        }
-        .save-badge {
-            display: inline-block;
-            background: var(--green);
-            color: var(--white);
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 60px;
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-            align-self: center;
-        }
-        .plan-name { font-weight: 700; font-size: 1.2rem; color: var(--text); margin-bottom: 4px; }
-        .price { font-size: 2.4rem; font-weight: 800; color: var(--orange); }
-        .price small { font-size: 1rem; font-weight: 500; color: var(--text-light); }
-        .price-per-month { font-size: 0.85rem; color: var(--text-light); margin-bottom: 16px; }
-        .features { list-style: none; text-align: left; margin: 12px 0 20px; flex:1; }
-        .features li { padding: 4px 0; border-bottom: 1px solid var(--medium-gray); font-size: 0.9rem; color: var(--text); }
-        .features li:last-child { border-bottom: none; }
-
-        /* ===== BEST PROVIDER ===== */
-        .best-provider { padding: 60px 0; background: var(--white); border-top: 1px solid var(--medium-gray); border-bottom: 1px solid var(--medium-gray); }
-        .best-provider-grid { max-width: 900px; margin: 0 auto; }
-        .best-provider-content { text-align: center; }
-        .best-provider-content .lead { font-size: 1.2rem; margin: 10px 0 16px; color: var(--text); }
-        .best-provider-content p { color: var(--text-light); }
-        .best-provider-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-            margin: 24px 0 28px;
-        }
-        .best-provider-badge {
-            background: var(--light-gray);
-            padding: 6px 20px 6px 14px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid var(--medium-gray);
-            font-weight: 500;
-            color: var(--text);
-        }
-        .best-provider-badge .icon { font-size: 1.2rem; }
-
-        /* ===== DEVICES ===== */
-        .devices { padding: 60px 0; background: var(--light-gray); }
-        .devices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-            gap: 20px;
-        }
-        .device-card {
-            background: var(--white);
-            padding: 20px 12px;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid var(--medium-gray);
-            transition: transform var(--transition), border-color var(--transition);
-            box-shadow: var(--shadow);
-        }
-        .device-card:hover { transform: translateY(-4px); border-color: var(--green); }
-        .device-card .icon { font-size: 2.2rem; display: block; margin-bottom: 4px; }
-        .device-name { font-weight: 700; font-size: 1.05rem; color: var(--text); }
-        .device-model { font-size: 0.85rem; color: var(--text-light); }
-        .device-keywords { font-size: 0.75rem; color: var(--orange); font-weight: 600; margin-top: 4px; }
-
-        /* ===== IPTV PLAYERS ===== */
-        .iptv-players { padding: 60px 0; background: var(--white); }
-        .players-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-            gap: 24px;
-        }
-        .player-card {
-            background: var(--light-gray);
-            padding: 22px 16px;
-            border-radius: var(--radius);
-            border: 1px solid var(--medium-gray);
-            text-align: center;
-            transition: transform var(--transition), border-color var(--transition);
-        }
-        .player-card:hover { transform: translateY(-4px); border-color: var(--orange); }
-        .player-card .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
-        .player-name { font-weight: 700; font-size: 1.1rem; color: var(--text); }
-        .player-desc { font-size: 0.9rem; color: var(--text-light); margin: 6px 0 10px; }
-        .player-badge {
-            display: inline-block;
-            background: var(--white);
-            color: var(--green);
-            font-weight: 600;
-            padding: 2px 14px;
-            border-radius: 60px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            border: 1px solid var(--green);
-        }
-
-        /* ===== PAYMENT ===== */
-        .payment { padding: 60px 0; background: var(--light-gray); }
-        .payment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .payment-card {
-            background: var(--white);
-            padding: 18px 12px;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid var(--medium-gray);
-            transition: border-color var(--transition);
-            box-shadow: var(--shadow);
-        }
-        .payment-card:hover { border-color: var(--green); }
-        .payment-card .icon { font-size: 2rem; display: block; }
-        .payment-name { font-weight: 700; color: var(--text); }
-        .payment-desc { font-size: 0.8rem; color: var(--text-light); }
-        .payment-trust {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 28px;
-            background: var(--white);
-            padding: 14px 24px;
-            border-radius: 60px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid var(--medium-gray);
-            box-shadow: var(--shadow);
-        }
-        .payment-trust .trust-text { background: transparent; box-shadow: none; padding: 0; font-weight: 500; color: var(--text); }
-
-        /* ===== CTA ===== */
-        .cta-section {
-            padding: 70px 0;
-            background: var(--light-gray);
-            border-top: 2px solid var(--orange);
-            border-bottom: 2px solid var(--orange);
-            text-align: center;
-        }
-        .cta-section h2 { font-size: 2.2rem; margin-bottom: 12px; color: var(--text); }
-        .cta-section p { max-width: 640px; margin: 0 auto 28px; font-size: 1.1rem; color: var(--text-light); }
-        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-        /* ===== FREE TRIAL ===== */
-        .free-trial-section {
-            padding: 60px 0;
-            background: var(--white);
-            text-align: center;
-            border-bottom: 1px solid var(--medium-gray);
-        }
-        .free-trial-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
-
-        /* ===== FAQ ===== */
-        .faq { padding: 60px 0; background: var(--light-gray); }
-        .faq-list { max-width: 720px; margin: 0 auto; }
-        .faq-item {
-            background: var(--white);
-            margin-bottom: 12px;
-            border-radius: 12px;
-            padding: 6px 18px;
-            border: 1px solid var(--medium-gray);
-            box-shadow: var(--shadow);
-        }
-        .faq-item summary {
-            font-weight: 700;
-            padding: 14px 0;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text);
-        }
-        .faq-item summary::-webkit-details-marker { display: none; }
-        .faq-item summary::after { content: "▾"; font-size: 1.2rem; color: var(--orange); }
-        .faq-item[open] summary::after { content: "▴"; }
-        .faq-item .answer { padding: 0 0 18px; color: var(--text-light); }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: var(--text);
-            color: var(--light-gray);
-            padding: 48px 0 20px;
-            border-top: 2px solid var(--orange);
-        }
-        .footer .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-        }
-        .footer-brand { max-width: 280px; }
-        .footer-brand .logo { color: var(--white); font-size: 1.4rem; }
-        .footer-brand p { font-size: 0.9rem; color: var(--gray); margin-top: 8px; line-height: 1.5; }
-        .footer-columns {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-        .footer-column h4 {
-            color: var(--white);
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            letter-spacing: 0.3px;
-        }
-        .footer-column a {
-            display: block;
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 3px 0;
-            transition: color 0.2s;
-        }
-        .footer-column a:hover { color: var(--orange); }
-        .footer-contact-items {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .footer-contact-items .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .footer-contact-items .contact-item:hover { color: var(--orange); }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 28px;
-            margin-top: 28px;
-            border-top: 1px solid var(--medium-gray);
-            font-size: 0.85rem;
-            color: var(--gray);
-            letter-spacing: 0.2px;
-        }
-        .footer-bottom a {
-            color: var(--gray);
-            text-decoration: none;
-        }
-        .footer-bottom a:hover { color: var(--orange); }
-
-        @media (max-width: 768px) {
-            .footer .container { flex-direction: column; gap: 30px; }
-            .footer-columns { flex-direction: column; gap: 24px; }
-        }
-
-        /* ===== WHATSAPP FLOAT ===== */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            background: #25d366;
-            color: var(--white);
-            width: 64px;
-            height: 64px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.4rem;
-            box-shadow: 0 6px 24px rgba(37,211,102,0.4);
-            text-decoration: none;
-            transition: transform 0.2s;
-            z-index: 1000;
-        }
-        .whatsapp-float:hover { transform: scale(1.08); }
-
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.8rem; }
-            .section-title { font-size: 1.6rem; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .cta-section h2 { font-size: 1.6rem; }
-            .whatsapp-float {
-                width: 56px;
-                height: 56px;
-                font-size: 2rem;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -698,7 +32,7 @@
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/" style="color: var(--orange); font-weight: 700;">IPTV</a></li>
-                <li><a href="/#pricing">Pricing</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="/reseller/">IPTV Reseller</a></li>
                 <li><a href="/support/">IPTV Support</a></li>
             </ul>
@@ -723,7 +57,7 @@
                     <strong>4K</strong> and <strong>HD</strong> quality.
                 </p>
                 <div class="hero-buttons">
-                    <a href="/#pricing" class="btn-primary">View Pricing</a>
+                    <a href="#pricing" class="btn-primary">View Pricing</a>
                     <a href="#free-trial" class="btn-secondary">Free Trial</a>
                 </div>
                 <div class="trust-badges">
@@ -838,7 +172,8 @@
                         <li>Basic Support</li>
                         <li>EPG &amp; Catch Up</li>
                     </ul>
-                    <a href="#free-trial" class="btn-buy-outline">Buy IPTV</a>
+                    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20buy%20the%20Monthly%20Plan%20(R150)%20of%20IPTV%20SA!"
+                       class="btn-buy-outline" target="_blank" rel="noopener">Buy IPTV</a>
                 </div>
                 <div class="pricing-card popular">
                     <span class="popular-badge">🔥 Most Popular</span>
@@ -852,7 +187,8 @@
                         <li>EPG &amp; Catch Up</li>
                         <li>3 Months Access</li>
                     </ul>
-                    <a href="#free-trial" class="btn-buy">Buy IPTV</a>
+                    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20buy%20the%20Quarterly%20Plan%20(R450)%20of%20IPTV%20SA!"
+                       class="btn-buy" target="_blank" rel="noopener">Buy IPTV</a>
                 </div>
                 <div class="pricing-card">
                     <span class="save-badge">💎 Save R100</span>
@@ -866,7 +202,8 @@
                         <li>EPG &amp; Catch Up</li>
                         <li>6 Months Access</li>
                     </ul>
-                    <a href="#free-trial" class="btn-buy-outline">Buy IPTV</a>
+                    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20buy%20the%20Half-Year%20Plan%20(R800)%20of%20IPTV%20SA!"
+                       class="btn-buy-outline" target="_blank" rel="noopener">Buy IPTV</a>
                 </div>
                 <div class="pricing-card">
                     <span class="save-badge">🏆 Best Value</span>
@@ -880,7 +217,8 @@
                         <li>EPG &amp; Catch Up</li>
                         <li>12 Months Access</li>
                     </ul>
-                    <a href="#free-trial" class="btn-buy-outline">Buy IPTV</a>
+                    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20buy%20the%20Yearly%20Plan%20(R1400)%20of%20IPTV%20SA!"
+                       class="btn-buy-outline" target="_blank" rel="noopener">Buy IPTV</a>
                 </div>
             </div>
         </div>
@@ -1085,7 +423,7 @@
             </p>
             <div class="cta-buttons">
                 <a href="#free-trial" class="btn-cta-large">🚀 Start Your Free Trial</a>
-                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;" target="_blank">
+                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;" target="_blank" rel="noopener">
                     💬 Chat on WhatsApp
                 </a>
             </div>
@@ -1103,10 +441,10 @@
                 Try IPTV SA completely free for 24 hours. No credit card required. Experience the best IPTV subscription South Africa has to offer.
             </p>
             <div class="free-trial-buttons">
-                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-primary" style="padding: 18px 50px; font-size: 1.1rem;" target="_blank">
+                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-primary" style="padding: 18px 50px; font-size: 1.1rem;" target="_blank" rel="noopener">
                     🚀 Claim Your Free Trial
                 </a>
-                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;" target="_blank">
+                <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="btn-secondary" style="padding: 18px 40px; font-size: 1.1rem;" target="_blank" rel="noopener">
                     💬 Chat on WhatsApp
                 </a>
             </div>
@@ -1176,7 +514,7 @@
                 <div class="footer-column">
                     <h4>Quick Links</h4>
                     <a href="/">IPTV</a>
-                    <a href="/#pricing">Pricing</a>
+                    <a href="#pricing">Pricing</a>
                     <a href="/reseller/">IPTV Reseller</a>
                     <a href="/support/">IPTV Support</a>
                 </div>
@@ -1189,7 +527,7 @@
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <div class="footer-contact-items">
-                        <a href="https://wa.me/923020548889" class="contact-item" target="_blank">
+                        <a href="https://wa.me/923020548889" class="contact-item" target="_blank" rel="noopener">
                             <span class="icon">💬</span>
                             <span>WhatsApp</span>
                         </a>
@@ -1207,10 +545,12 @@
     </footer>
 
     <!-- ===== WHATSAPP FLOATING BUTTON ===== -->
-    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/923020548889?text=Hi!%20I%20want%20to%20try%20IPTV%20SA%20for%20free!" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         💬
     </a>
 
     <script src="script.js"></script>
 </body>
 </html>
+
+    
